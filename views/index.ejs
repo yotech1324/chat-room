@@ -10,96 +10,39 @@
 </head>
 
 <body>
-    <div class="container">
-        <sidebar>
-            <span class="logo">CHAT-Room</span>
-            <div class="list-wrap">
-                <div class="list">
-                    <img src="" alt="" />
-                    <div class="info">
-                        <span class="user">Yogesh Sahu</span>
-                        <span class="text">it's me</span>
-                    </div>
-                    <span class="count">20</span>
-                    <span class="time">now</span>
-                </div>
-                <div class="list">
-                    <img src="" alt="" />
-                    <div class="info">
-                        <span class="user">Ankit</span>
-                        <span class="text">it's me</span>
-                    </div>
-                    <span class="count">20</span>
-                    <span class="time">now</span>
-                </div>
-                <div class="list">
-                    <img src="" alt="" />
-                    <div class="info">
-                        <span class="user">Nikhil</span>
-                        <span class="text">it's me</span>
-                    </div>
-                    <span class="count">20</span>
-                    <span class="time">now</span>
-                </div>
-                <div class="list">
-                    <img src="" alt="" />
-                    <div class="info">
-                        <span class="user">Anshdeep</span>
-                        <span class="text">it's me</span>
-                    </div>
-                    <span class="count">20</span>
-                    <span class="time">now</span>
-                </div>
+    <div class="--dark-theme" id="chat">
+
+
+        <!-- // diff code -->
+        <div class="chat__conversation-board">
+
+
+            <div class="menu">
+                <h2> Chat-Room => </h2>
+                <span> <b>You</b>, Nikhil, Ankit & Anshdeep
+                </span>
             </div>
-        </sidebar>
+            <div class="message-wrap" id="all-messages"></div>
+        </div>
+        <div class="chat__conversation-panel">
 
-        <div class="content">
-            <header>
-                <img src="" alt="">
-                <div class="info">
-                    <span class="user"></span>
-                    <span class="time"></span>
-                </div>
-                <div class="open">
-                    <a href="javascript:;">UP</a>
-                </div>
-            </header>
-            <div class="message-wrap" id="all-messages">
-                <!-- <div class="message-list msg" id="all-messages">
-                </div>
-                <div class="message-list me " id="">
-                </div>
-             -->
-            </div>
+            <div class="chat__conversation-panel__container">
 
-
-            <div class="message-footer">
-                <!-- /  <input type="text" id="roomName" placeholder="Room name"> -->
-                <!--     <button id="joinBtn" style="background: rgb(155, 156, 163);">Join</button> -->
-
-                <input type="text" id="message" data-placeholder="Send a message to {0}" />
-                <button id="sendBtn" type="submit" style="background: rgb(155, 156, 163);">Send</button>
-
-                <!-- <input type="text" id="roomId" placeholder="type room id here"> -->
+                <input class="chat__conversation-panel__input panel-item" id="message"
+                    placeholder="Type a message..." />
+                <button id="sendBtn" type="submit"
+                    class="chat__conversation-panel__button panel-item btn-icon send-message-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true" data-reactid="1036">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
-
-    <!-- old code -->
-
-
-    <!--  
-    <div>
-
-       <input type="text" id="roomName" placeholder="Room name">
-       <button id="joinBtn">Join</button>
     </div>
-    <br>   
-       <input type="text" id="message" placeholder="type message here">
-       <input type="text" id="roomId" placeholder="type room id here">
-       <button id="sendBtn">send</button>
-
-    <div id="all-messages" style="border: 2px solid red; margin: bottum 4px;"></div> -->
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -139,13 +82,13 @@
     // getting username and roomname from  url
     const urlParams = new URLSearchParams(window.location.search);
 
-    const userName = urlParams.get('userName'); 
-    const roomName = urlParams.get('roomName');   
-let userList = 0;
- 
+    const userName = urlParams.get('userName');
+    const roomName = urlParams.get('roomName');
+    let userList = 0;
+
     //websocket handling
     socket.on("connect", (e) => {
-        console.log("my id -", socket.id); 
+        console.log("my id -", socket.id);
     })
 
     socket.on("receive-message", (messageData) => {
@@ -162,25 +105,25 @@ let userList = 0;
     sendBtn.addEventListener("click", async (e) => {
 
         const message = messageInput.value;
-      /*  await  axios.get('/user/allusers', { roomName, userName }).then(function (response) {
-            console.log(response.data);
-            userList = response.data;
-            console.log(userList)
-            // Display the response data
-          })
-        .catch(function (error) {
-            console.error('Error making POST request:', error);
-        }) */
+        /*  await  axios.get('/user/allusers', { roomName, userName }).then(function (response) {
+              console.log(response.data);
+              userList = response.data;
+              console.log(userList)
+              // Display the response data
+            })
+          .catch(function (error) {
+              console.error('Error making POST request:', error);
+          }) */
         console.log(message, roomName, userName);
-     // save messagge api calling by axios http request.
-    await axios.post('/msg/message', { message, roomName, userName })
-     .catch(function (error) {
-         console.error('Error making POST request:', error);
-        });
-        
-     
+        // save messagge api calling by axios http request.
+        await axios.post('/msg/message', { message, roomName, userName })
+            .catch(function (error) {
+                console.error('Error making POST request:', error);
+            });
+
+
         socket.emit("message", { message, roomName, userName });
-        
+
         const m = Object.assign(document.createElement("div"), { className: "message-list me msg" });
         m.innerHTML = `<p class="senderName">${userName} <span>${formattedTime}</span></p>
         <p>${message}</p>`;
@@ -188,23 +131,23 @@ let userList = 0;
         allMessages.scrollTop = allMessages.scrollHeight
         //  e.target.messageInput.value = '';
         // e.target.element.messageInput.focus() = '';
-        
-        
+
+
     })
-    
+
     document.addEventListener('keypress', function (event) {
         // Check if the key pressed is Enter (key code 13)
         if (event.key === 'Enter' || event.keyCode === 13) {
             // Your code to execute when Enter is pressed
-            
+
             const message = messageInput.value;
             console.log(message);
-            
+
             // save messagge api calling by axios http request.
             axios.post('/msg/message', { message, roomName, userName })
-            .catch(function (error) {
-                console.error('Error making POST request:', error);
-            });
+                .catch(function (error) {
+                    console.error('Error making POST request:', error);
+                });
 
             socket.emit("message", { userName, roomName, message });
 
@@ -431,7 +374,7 @@ function click(l, index) {
         /* //header */
         header {
             height: 76px;
-            background: #fff;
+           /* background: #fff; */
             border-bottom: 1px solid #ccc;
             display: flex;
             padding: 10px;
@@ -503,7 +446,7 @@ function click(l, index) {
         .me {
             align-self: flex-end;
 
-            background: #bde2f7;
+            background: #a729d1;
             color: #111;
         }
 
@@ -525,18 +468,18 @@ function click(l, index) {
 
     /* //msg footer */
     .message-footer {
-        border-top: 1px solid #ddd;
-        background: #eee;
+      /*  border-top: 1px solid #ddd;
+        background: #eee; */
         padding: 10px;
         display: flex;
         flex-direction: column;
-
+/*
         #sendBtn {
             width: 100px;
             height: 40px;
             margin-left: 15px;
         }
-
+*/
         input {
             flex: 1;
             margin-left: 15px;
@@ -579,6 +522,182 @@ function click(l, index) {
                 display: block !important;
             }
         }
+    }
+
+
+
+
+    /*
+
+    new ui css
+    */
+
+    .--dark-theme {
+        --chat-background: rgba(10, 14, 14, 0.95);
+        --chat-panel-background: #131719;
+        --chat-bubble-background: #14181a;
+        --chat-bubble-active-background: #171a1b;
+        --chat-add-button-background: #212324;
+        --chat-send-button-background: #8147fc;
+        --chat-text-color: #a3a3a3;
+        --chat-options-svg: #a3a3a3;
+    }
+
+    body {
+        background: url(https://images.unsplash.com/photo-1495808985667-ba4ce2ef31b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80);
+        background-size: cover;
+    }
+
+    #chat {
+      background: var(--chat-background); 
+        max-width: 600px;
+        margin: 25px auto;
+        box-sizing: border-box;
+        /* padding: 1em; */
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #chat::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* background: url(https://images.unsplash.com/photo-1495808985667-ba4ce2ef31b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80) fixed; */
+        z-index: -1;
+    }
+
+    #chat .btn-icon {
+        position: relative;
+        cursor: pointer;
+    }
+
+    #chat .btn-icon svg {
+       stroke: #FFF; 
+        fill: #FFF; 
+        width: 50%;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #chat .chat__conversation-board {
+        padding: 1em 0 2em;
+        height: calc(100vh - 55px - 2em - 25px * 2 - .5em - 3em);
+        overflow: auto;
+    }
+
+    #chat .chat__conversation-board__message__bubble:active {
+     background: var(--chat-bubble-active-background); 
+    }
+
+    #chat .chat__conversation-panel {
+        background: var(--chat-panel-background); 
+        border-radius: 12px;
+        padding: 0 1em;
+        height: 55px;
+        margin: 0.5em 0 0;
+    }
+
+    #chat .chat__conversation-panel__container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 100%;
+    }
+
+    #chat .chat__conversation-panel__container .panel-item:not(:last-child) {
+        margin: 0 1em 0 0;
+    }
+
+    #chat .chat__conversation-panel__button {
+        background: grey;
+        height: 20px;
+        width: 30px;
+        border: 0;
+        padding: 0;
+        outline: none;
+        cursor: pointer;
+    }
+
+    #chat .chat__conversation-panel .send-message-button {
+        background: var(--chat-send-button-background);
+        height: 30px;
+        min-width: 30px;
+        border-radius: 50%;
+        transition: 0.3s ease;
+    }
+
+    #chat .chat__conversation-panel .send-message-button:active {
+        transform: scale(0.97);
+    }
+
+    #chat .chat__conversation-panel .send-message-button svg {
+        margin: 2px -2px;
+    }
+
+    #chat .chat__conversation-panel__input {
+        width: 100%;
+        height: 100%;
+        outline: none;
+        position: relative;
+        color:   var(--chat-text-color) ;
+        font-size: 13px;
+        background: transparent;
+        border: 0;
+        font-family: "Lato", sans-serif;
+        resize: none;
+    }
+
+    @media only screen and (max-width: 600px) {
+        #chat {
+            margin: 0;
+            border-radius: 0;
+        }
+
+        #chat .chat__conversation-board {
+            height: calc(100vh - 55px - 2em - .5em - 3em);
+        }
+
+        #chat .chat__conversation-board__message__options {
+            display: none !important;
+        }
+    }
+
+
+
+    /* diff css */
+    .menu {
+        /* position: fixed; */
+        display: flex;
+        color: #f11313;
+        /* margin: -10px; */
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        font-size: 700;
+        width: 100%;
+        /* height: 60px; */
+        /* margin-left: 40px; */
+        
+        justify-content: center;
+        z-index: 100;
+        flex-direction: column;
+        /* -webkit-touch-callout: none; */
+        /* -webkit-user-select: none; */
+        /* -moz-user-select: none; */
+        /* -ms-user-select: none; */
+
+    }
+
+    .menu h2{
+        font-size: larger;
+        font-weight: 600;
     }
 </style>
 
