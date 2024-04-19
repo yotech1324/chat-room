@@ -2,10 +2,11 @@ import express from "express";
 import mongoose from "mongoose";
 // import cors from 'cors'
 import axios from 'axios';
-
+import dotenv from 'dotenv';
 const app = express();
+dotenv.config(); 
 app.set('view engine', 'ejs')
-
+ 
 import http from "http";
 import { Server } from "socket.io";
 const server = http.createServer(app);
@@ -28,7 +29,7 @@ io.on("connection", (socket) => {
         socket.to(messageData.data.roomName).emit('receive-message', messageData);   
     } )
     
-    
+     
     socket.on('join-room', (roomName) => {
         console.log(`user joined room ${roomName}`);
 socket.join(roomName);
@@ -50,17 +51,18 @@ app.get('/chat/', (req, res) => {
 
 
 app.get('/', (req, res) => {
-    res.render('login.ejs')
+     res.render('login.ejs')
 })
 
 app.use('/user', userRoutes)
 app.use('/msg',messageRoutes)
 
- 
-const CONNECTION_URL = "mongodb://localhost:27017/chat-room"
+const CONNECTION_URL= process.env.CONNECTION_URL 
+
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => server.listen(PORT, () => { console.log(`server is running on PORT ${PORT}`) }))
     .catch((err) => console.log(err.message))
 
 
 const PORT = process.env.PORT || 5000
+ 
