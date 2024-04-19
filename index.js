@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
     
     socket.on('message', async(data) => {
         const messageData = {data, time:moment().format('h:mm a')}
-        console.log(data);
+        // console.log(data);
         socket.to(messageData.data.roomName).emit('receive-message', messageData);   
     } )
     
@@ -39,7 +39,7 @@ socket.join(roomName);
     // })
     
 });
-    
+    app.use(express.static("./public"))
     app.use(express.json({ limit: "30mb", extended: true }))
     app.use(express.urlencoded({ limit: "30mb", extended: true }))
 // app.use(cors())
