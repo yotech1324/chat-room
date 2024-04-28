@@ -205,3 +205,35 @@ body {
     justify-content: space-between;
     margin-bottom: 4px;
 }
+
+
+@media only screen and (max-width: 768px) {
+    /* Adjustments for smaller screens */
+    .navigation {
+        width: 90%;
+        max-width: none;
+    }
+    .nav {
+        width: 90%;
+    }
+    .message-wrap {
+        padding: 10px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    /* Further adjustments for smaller screens */
+    .navigation {
+        border-width: 6px;
+        padding: 15px;
+    }
+    .nav {
+        flex-direction: column;
+    }
+    .message-wrap {
+        padding: 5px;
+    }
+    .message-list {
+        max-width: 100%;
+    }
+}
