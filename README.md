@@ -1,6 +1,6 @@
 https://chat-room-3mbg.onrender.com/ 
 in this link this project hosted
-to run this project on localhost 
+\n to run this project on localhost 
 just follow steps
 run command in cmd :  npm i
 then create a file .env in chat-room folder
