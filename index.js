@@ -18,7 +18,7 @@ import messageRoutes from './routes/messages.js'
 
 // time handling package
 import moment from "moment";
-// import { saveMessage } from "./controllers/messages.js";
+
 //sockets handling
 io.on("connection", (socket) => {
     console.log("new user connected", socket.id);
@@ -58,7 +58,7 @@ app.use('/user', userRoutes)
 app.use('/msg',messageRoutes)
 
 const CONNECTION_URL= process.env.CONNECTION_URL 
-
+ 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => server.listen(PORT, () => { console.log(`server is running on PORT ${PORT}`) }))
     .catch((err) => console.log(err.message))
