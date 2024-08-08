@@ -1,5 +1,6 @@
+project hosted on
 https://chat-room-3mbg.onrender.com/ 
-in this link this project hosted                                                                                                                                               
+                                                                                                                                              
                                                                                                                                                       
  to run this project on localhost                                                                                                      
 just follow steps                                                                          
